@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:jdbc.properties")
-@ComponentScan("com.hugh.service")
+@ComponentScan({"com.hugh.service","com.hugh.dao"})
 @Import({JDBcConfig.class,MyBatisConfig.class})
 public class SpringConfig {
 }

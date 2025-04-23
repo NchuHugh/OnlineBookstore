@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线书城 - 首页</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav li {
+            margin: 0 1rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        .welcome {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .book-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .book-card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+        .book-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        .book-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .book-author {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        .book-price {
+            color: #e63946;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .book-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .user-info span {
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>在线书城</h1>
+        <p>您的知识宝库，尽在这里</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="#">图书分类</a></li>
+            <li><a href="#">新书上架</a></li>
+            <li><a href="#">热门推荐</a></li>
+        </ul>
+        <div class="user-info">
+            <span id="userWelcome">游客，您好！</span>
+            <a href="login.html" id="loginLink">登录</a>
+            <a href="register.html" id="registerLink">注册</a>
+            <a href="user-profile.html" id="profileLink" style="display: none;">个人中心</a>
+            <a href="#" id="logoutLink" style="display: none;">退出登录</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="welcome">
+            <h2>欢迎来到在线书城</h2>
+            <p>这里有海量图书资源，满足您的阅读需求</p>
+        </div>
+        
+        <h2>热门图书</h2>
+        <div class="book-list">
+            <!-- 图书卡片示例 -->
+            <div class="book-card">
+                <img src="https://img3.doubanio.com/view/subject/s/public/s1070222.jpg" alt="Java编程思想">
+                <div class="book-title">Java编程思想</div>
+                <div class="book-author">Bruce Eckel</div>
+                <div class="book-price">¥108.00</div>
+                <div class="book-actions">
+                    <button class="btn btn-secondary">查看详情</button>
+                    <button class="btn btn-primary">加入购物车</button>
+                </div>
+            </div>
+            
+            <div class="book-card">
+                <img src="https://img9.doubanio.com/view/subject/s/public/s29631790.jpg" alt="Python编程：从入门到实践">
+                <div class="book-title">Python编程：从入门到实践</div>
+                <div class="book-author">Eric Matthes</div>
+                <div class="book-price">¥89.00</div>
+                <div class="book-actions">
+                    <button class="btn btn-secondary">查看详情</button>
+                    <button class="btn btn-primary">加入购物车</button>
+                </div>
+            </div>
+            
+            <div class="book-card">
+                <img src="https://img2.doubanio.com/view/subject/s/public/s1070959.jpg" alt="红楼梦">
+                <div class="book-title">红楼梦</div>
+                <div class="book-author">曹雪芹</div>
+                <div class="book-price">¥59.80</div>
+                <div class="book-actions">
+                    <button class="btn btn-secondary">查看详情</button>
+                    <button class="btn btn-primary">加入购物车</button>
+                </div>
+            </div>
+            
+            <div class="book-card">
+                <img src="https://img2.doubanio.com/view/subject/s/public/s29651121.jpg" alt="活着">
+                <div class="book-title">活着</div>
+                <div class="book-author">余华</div>
+                <div class="book-price">¥39.50</div>
+                <div class="book-actions">
+                    <button class="btn btn-secondary">查看详情</button>
+                    <button class="btn btn-primary">加入购物车</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 在线书城. 保留所有权利.</p>
+    </footer>
+
+    <script>
+        // 检查用户登录状态
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/users/current')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.data) {
+                        // 用户已登录
+                        const user = data.data;
+                        document.getElementById('userWelcome').textContent = `${user.username}，您好！`;
+                        document.getElementById('loginLink').style.display = 'none';
+                        document.getElementById('registerLink').style.display = 'none';
+                        document.getElementById('profileLink').style.display = 'inline';
+                        document.getElementById('logoutLink').style.display = 'inline';
+                    }
+                })
+                .catch(error => {
+                    console.error('获取用户信息失败:', error);
+                });
+        });
+        
+        // 退出登录
+        document.getElementById('logoutLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            fetch('/api/users/logout', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('退出登录失败:', error);
+            });
+        });
+    </script>
+</body>
+</html>

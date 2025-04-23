@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 在线书城</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        /* 个人中心页面特定样式 */
+        .container {
+            max-width: 800px;
+        }
+        .user-info, .profile-info {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .user-info h2, .profile-info h2 {
+            margin-top: 0;
+            color: #4CAF50;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .nav a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="#" id="logoutBtn">退出登录</a>
+        </div>
+        
+        <h1>个人中心</h1>
+        
+        <div class="user-info">
+            <h2>基本信息</h2>
+            <p><strong>用户名：</strong><span id="usernameDisplay"></span></p>
+            <p><strong>邮箱：</strong><span id="emailDisplay"></span></p>
+            <p><strong>注册时间：</strong><span id="createdAtDisplay"></span></p>
+        </div>
+        
+        <div class="profile-info">
+            <h2>个人资料</h2>
+            <p><strong>真实姓名：</strong><span id="realNameDisplay">待完善</span></p>
+            <p><strong>收货地址：</strong><span id="addressDisplay">待完善</span></p>
+            <p><strong>联系电话：</strong><span id="phoneDisplay">待完善</span></p>
+            <p><strong>上次更新：</strong><span id="updatedAtDisplay">待完善</span></p>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="profile">个人资料</div>
+            <div class="tab" data-tab="password">修改密码</div>
+        </div>
+        
+        <div id="profileTab" class="tab-content active">
+            <h2>个人资料</h2>
+            <div class="form-group">
+                <label for="realName">真实姓名</label>
+                <input type="text" id="realName" name="realName">
+            </div>
+            <div class="form-group">
+                <label for="address">收货地址</label>
+                <input type="text" id="address" name="address">
+            </div>
+            <div class="form-group">
+                <label for="phone">联系电话</label>
+                <input type="text" id="phone" name="phone">
+            </div>
+            <button id="updateProfileBtn">保存修改</button>
+            <div id="profileMessage"></div>
+        </div>
+        
+        <div id="passwordTab" class="tab-content">
+            <h2>修改密码</h2>
+            <div class="form-group">
+                <label for="oldPassword">当前密码</label>
+                <input type="password" id="oldPassword" name="oldPassword">
+            </div>
+            <div class="form-group">
+                <label for="newPassword">新密码</label>
+                <input type="password" id="newPassword" name="newPassword">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">确认新密码</label>
+                <input type="password" id="confirmPassword" name="confirmPassword">
+            </div>
+            <button id="changePasswordBtn">修改密码</button>
+            <div id="passwordMessage"></div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/user-profile.js"></script>
+</body>
+</html>
