@@ -149,97 +149,22 @@
             <p>这里有海量图书资源，满足您的阅读需求</p>
         </div>
         
-        <h2>热门图书</h2>
-        <div class="book-list">
-            <!-- 图书卡片示例 -->
-            <div class="book-card">
-                <img src="https://img3.doubanio.com/view/subject/s/public/s1070222.jpg" alt="Java编程思想">
-                <div class="book-title">Java编程思想</div>
-                <div class="book-author">Bruce Eckel</div>
-                <div class="book-price">¥108.00</div>
-                <div class="book-actions">
-                    <button class="btn btn-secondary">查看详情</button>
-                    <button class="btn btn-primary">加入购物车</button>
-                </div>
-            </div>
-            
-            <div class="book-card">
-                <img src="https://img9.doubanio.com/view/subject/s/public/s29631790.jpg" alt="Python编程：从入门到实践">
-                <div class="book-title">Python编程：从入门到实践</div>
-                <div class="book-author">Eric Matthes</div>
-                <div class="book-price">¥89.00</div>
-                <div class="book-actions">
-                    <button class="btn btn-secondary">查看详情</button>
-                    <button class="btn btn-primary">加入购物车</button>
-                </div>
-            </div>
-            
-            <div class="book-card">
-                <img src="https://img2.doubanio.com/view/subject/s/public/s1070959.jpg" alt="红楼梦">
-                <div class="book-title">红楼梦</div>
-                <div class="book-author">曹雪芹</div>
-                <div class="book-price">¥59.80</div>
-                <div class="book-actions">
-                    <button class="btn btn-secondary">查看详情</button>
-                    <button class="btn btn-primary">加入购物车</button>
-                </div>
-            </div>
-            
-            <div class="book-card">
-                <img src="https://img2.doubanio.com/view/subject/s/public/s29651121.jpg" alt="活着">
-                <div class="book-title">活着</div>
-                <div class="book-author">余华</div>
-                <div class="book-price">¥39.50</div>
-                <div class="book-actions">
-                    <button class="btn btn-secondary">查看详情</button>
-                    <button class="btn btn-primary">加入购物车</button>
-                </div>
-            </div>
+        <!-- 搜索栏 -->
+        <div class="search-bar" style="text-align:center;margin:1rem 0;">
+            <input id="searchInput" type="text" placeholder="搜索书名或作者" style="width:60%;padding:0.5rem;font-size:1rem;">
+            <button id="searchBtn" class="btn btn-primary">搜索</button>
+        </div>
+        <h2>图书列表</h2>
+        <div class="book-list" id="bookList">
+            <!-- 图书将通过JS动态加载 -->
         </div>
     </div>
     
     <footer>
-        <p>&copy; 2025 在线书城. 保留所有权利.</p>
+        <p>&copy; 22046113 梁辉 Web高级开发技术课程设计.</p>
     </footer>
 
-    <script>
-        // 检查用户登录状态
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('/api/users/current')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.data) {
-                        // 用户已登录
-                        const user = data.data;
-                        document.getElementById('userWelcome').textContent = `${user.username}，您好！`;
-                        document.getElementById('loginLink').style.display = 'none';
-                        document.getElementById('registerLink').style.display = 'none';
-                        document.getElementById('profileLink').style.display = 'inline';
-                        document.getElementById('logoutLink').style.display = 'inline';
-                    }
-                })
-                .catch(error => {
-                    console.error('获取用户信息失败:', error);
-                });
-        });
-        
-        // 退出登录
-        document.getElementById('logoutLink').addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            fetch('/api/users/logout', {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.reload();
-                }
-            })
-            .catch(error => {
-                console.error('退出登录失败:', error);
-            });
-        });
-    </script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/book.js"></script>
 </body>
 </html>
