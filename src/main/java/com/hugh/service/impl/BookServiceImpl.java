@@ -31,4 +31,24 @@ public class BookServiceImpl implements BookService {
     public Book getById(Integer bookId) {
         return bookDao.findById(bookId);
     }
+    
+    @Override
+    public List<Book> findAllWithPaging(int offset, int limit) {
+        return bookDao.findAllWithPaging(offset, limit);
+    }
+    
+    @Override
+    public List<Book> searchByKeywordWithPaging(String keyword, int offset, int limit) {
+        return bookDao.searchByKeywordWithPaging(keyword, offset, limit);
+    }
+    
+    @Override
+    public int count() {
+        return bookDao.count();
+    }
+    
+    @Override
+    public int countByKeyword(String keyword) {
+        return bookDao.countByKeyword(keyword);
+    }
 }

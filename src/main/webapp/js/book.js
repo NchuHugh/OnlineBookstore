@@ -3,19 +3,32 @@
 
 // 全局变量
 let books = [];
+let currentPage = 1;
+let pageSize = 16;
+let totalPages = 1;
+let currentKeyword = '';
 
 // 页面加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
     // 加载图书列表
-    loadBooks();
+    loadBooks(currentPage, pageSize);
     
     // 绑定搜索按钮事件
     document.getElementById('searchBtn').addEventListener('click', function() {
         const keyword = document.getElementById('searchInput').value.trim();
+        currentKeyword = keyword;
+        currentPage = 1; // 搜索时重置到第一页
         if (keyword) {
-            searchBooks(keyword);
+            searchBooks(keyword, currentPage, pageSize);
         } else {
-            loadBooks();
+            loadBooks(currentPage, pageSize);
+        }
+    });
+    
+    // 回车键也触发搜索
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('searchBtn').click();
         }
     });
     
@@ -70,14 +83,21 @@ function handleLogout(e) {
 
 /**
  * 加载所有图书
+ * @param {number} page 页码
+ * @param {number} size 每页数量
  */
-function loadBooks() {
-    fetch('/api/book')
+function loadBooks(page = 1, size = 16) {
+    fetch(`/api/book?page=${page}&size=${size}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                books = data.data;
+                const result = data.data;
+                books = result.books;
+                currentPage = result.page;
+                totalPages = result.totalPages;
+                
                 renderBooks(books);
+                renderPagination(currentPage, totalPages);
             } else {
                 console.error('加载图书失败:', data.message);
             }
@@ -90,14 +110,21 @@ function loadBooks() {
 /**
  * 搜索图书
  * @param {string} keyword 搜索关键词
+ * @param {number} page 页码
+ * @param {number} size 每页数量
  */
-function searchBooks(keyword) {
-    fetch(`/api/book?search=${encodeURIComponent(keyword)}`)
+function searchBooks(keyword, page = 1, size = 16) {
+    fetch(`/api/book?search=${encodeURIComponent(keyword)}&page=${page}&size=${size}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                books = data.data;
+                const result = data.data;
+                books = result.books;
+                currentPage = result.page;
+                totalPages = result.totalPages;
+                
                 renderBooks(books);
+                renderPagination(currentPage, totalPages, keyword);
             } else {
                 console.error('搜索图书失败:', data.message);
             }
@@ -124,7 +151,7 @@ function renderBooks(bookList) {
         const bookCard = document.createElement('div');
         bookCard.className = 'book-card';
         
-        const coverUrl = book.coverImage || 'https://via.placeholder.com/150x200?text=No+Image';
+        const coverUrl = book.coverImage || '/image/book.jpg';
         
         bookCard.innerHTML = `
             <img src="${coverUrl}" alt="${book.title}">
@@ -154,6 +181,127 @@ function renderBooks(bookList) {
             addToCart(bookId);
         });
     });
+}
+
+/**
+ * 渲染分页器
+ * @param {number} currentPage 当前页码
+ * @param {number} totalPages 总页数
+ * @param {string} keyword 搜索关键词（可选）
+ */
+function renderPagination(currentPage, totalPages, keyword = '') {
+    // 检查是否已经存在分页器
+    let paginationContainer = document.getElementById('pagination');
+    
+    if (!paginationContainer) {
+        // 如果不存在，创建分页器容器
+        paginationContainer = document.createElement('div');
+        paginationContainer.id = 'pagination';
+        paginationContainer.className = 'pagination';
+        
+        // 将分页器添加到图书列表下方
+        const bookListContainer = document.getElementById('bookList').parentNode;
+        bookListContainer.appendChild(paginationContainer);
+        
+        // 添加分页器样式
+        const style = document.createElement('style');
+        style.textContent = `
+            .pagination {
+                display: flex;
+                justify-content: center;
+                margin-top: 2rem;
+                gap: 0.5rem;
+            }
+            .pagination button {
+                padding: 0.5rem 1rem;
+                border: 1px solid #ddd;
+                background-color: white;
+                cursor: pointer;
+                border-radius: 3px;
+            }
+            .pagination button.active {
+                background-color: #4CAF50;
+                color: white;
+                border-color: #4CAF50;
+            }
+            .pagination button:hover:not(.active) {
+                background-color: #f1f1f1;
+            }
+            .pagination button:disabled {
+                color: #ccc;
+                cursor: not-allowed;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // 清空分页器
+    paginationContainer.innerHTML = '';
+    
+    // 如果只有1页，不显示分页器
+    if (totalPages <= 1) return;
+    
+    // 上一页按钮
+    const prevButton = document.createElement('button');
+    prevButton.textContent = '上一页';
+    prevButton.disabled = currentPage <= 1;
+    prevButton.addEventListener('click', () => {
+        if (currentPage > 1) {
+            if (keyword) {
+                searchBooks(keyword, currentPage - 1, pageSize);
+            } else {
+                loadBooks(currentPage - 1, pageSize);
+            }
+        }
+    });
+    paginationContainer.appendChild(prevButton);
+    
+    // 页码按钮
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, startPage + 4);
+    
+    // 调整范围，确保显示5个页码按钮（如果有足够页码）
+    if (endPage - startPage < 4 && totalPages > 5) {
+        if (startPage === 1) {
+            endPage = Math.min(5, totalPages);
+        } else if (endPage === totalPages) {
+            startPage = Math.max(1, totalPages - 4);
+        }
+    }
+    
+    // 创建页码按钮
+    for (let i = startPage; i <= endPage; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        if (i === currentPage) {
+            pageButton.className = 'active';
+        }
+        pageButton.addEventListener('click', () => {
+            if (i !== currentPage) {
+                if (keyword) {
+                    searchBooks(keyword, i, pageSize);
+                } else {
+                    loadBooks(i, pageSize);
+                }
+            }
+        });
+        paginationContainer.appendChild(pageButton);
+    }
+    
+    // 下一页按钮
+    const nextButton = document.createElement('button');
+    nextButton.textContent = '下一页';
+    nextButton.disabled = currentPage >= totalPages;
+    nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            if (keyword) {
+                searchBooks(keyword, currentPage + 1, pageSize);
+            } else {
+                loadBooks(currentPage + 1, pageSize);
+            }
+        }
+    });
+    paginationContainer.appendChild(nextButton);
 }
 
 /**
