@@ -1,6 +1,6 @@
 package com.hugh.service.impl;
 
-import com.hugh.dao.BookDao;
+import com.hugh.mapper.BookDao;
 import com.hugh.domain.Book;
 import com.hugh.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;

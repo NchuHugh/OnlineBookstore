@@ -48,4 +48,44 @@ INSERT INTO t_book (category_id, title, author, publisher, price, stock, cover_i
 -- 生活艺术类图书
 (8, '菜谱大全', '萨巴蒂娜', '中国轻工业出版社', 78.00, 100, 'https://img1.doubanio.com/view/subject/s/public/s28296550.jpg', '收录了各国经典菜肴的制作方法，图文并茂，适合家庭烹饪爱好者'),
 (8, '艺术的故事', '贡布里希', '广西美术出版社', 128.00, 30, 'https://img3.doubanio.com/view/subject/s/public/s3219163.jpg', '西方艺术史的经典著作，以通俗易懂的语言讲述了从史前到现代的艺术发展历程'),
-(8, '园艺造景', '约翰·布鲁克斯', '中国建筑工业出版社', 88.00, 25, 'https://img2.doubanio.com/view/subject/s/public/s4146437.jpg', '园艺设计和景观规划的实用指南，包含了丰富的案例和实用技巧');
+(8, '园艺造景', '约翰·布鲁克斯', '中国建筑工业出版社', 88.00, 25, 'https://img2.doubanio.com/view/subject/s/public/s4146437.jpg', '园艺设计和景观规划的实用指南，包含了丰富的案例和实用技巧'),
+
+(1, '活着', '余华', '作家出版社', 46.00, 95, 'https://covers.openlibrary.org/b/id/10594758-L.jpg', '一段普通人跌宕起伏的生命历程。'),
+(1, '白夜行', '东野圭吾', '南海出版公司', 59.00, 85, 'https://covers.openlibrary.org/b/id/10624758-L.jpg', '充满阴谋与秘密的跨越岁月的推理故事。'),
+(1, '恶意', '东野圭吾', '南海出版公司', 39.00, 60, 'https://covers.openlibrary.org/b/id/10654758-L.jpg', '对人性深层次探究的推理佳作。'),
+
+-- 历史
+(2, '全球通史', '斯塔夫里阿诺斯', '北京大学出版社', 89.00, 70, 'https://covers.openlibrary.org/b/id/10594759-L.jpg', '从史前到21世纪的人类文明发展全景。'),
+(2, '战争与和平', '列夫·托尔斯泰', '人民文学出版社', 99.00, 50, 'https://covers.openlibrary.org/b/id/10614759-L.jpg', '以俄罗斯历史为背景描绘的史诗巨著。'),
+
+-- 科技
+(3, '深度学习', 'Ian Goodfellow', '人民邮电出版社', 158.00, 35, 'https://covers.openlibrary.org/b/id/10584758-L.jpg', '人工智能和机器学习领域权威之作。'),
+(3, '计算机程序的构造和解释', 'Harold Abelson', '机械工业出版社', 135.00, 20, 'https://covers.openlibrary.org/b/id/10634758-L.jpg', 'SICP经典教材，程序员的思维指南。'),
+
+-- 艺术
+(4, '当代艺术史', 'Terry Smith', '广西师范大学出版社', 88.00, 25, 'https://covers.openlibrary.org/b/id/10574758-L.jpg', '系统梳理20世纪以来的艺术演变。'),
+(4, '摄影笔记', '森山大道', '新星出版社', 65.00, 30, 'https://covers.openlibrary.org/b/id/10664758-L.jpg', '知名街头摄影师的实践记录。'),
+
+-- 儿童
+(5, '魔法灰姑娘', '盖尔·卡森·莱文', '新星出版社', 48.00, 120, 'https://covers.openlibrary.org/b/id/10564758-L.jpg', '一个与众不同的童话公主成长故事。'),
+(5, '秘密花园', '弗朗西丝·霍奇森·伯内特', '译林出版社', 45.00, 90, 'https://covers.openlibrary.org/b/id/10674758-L.jpg', '关于成长与治愈的温暖故事。'),
+
+-- 心理学
+(6, '蛤蟆先生去看心理医生', '罗伯特·戴博德', '中信出版社', 49.00, 70, 'https://covers.openlibrary.org/b/id/10554758-L.jpg', '以寓言形式讲述心理治疗的过程。'),
+(6, '思考，快与慢', '丹尼尔·卡尼曼', '中信出版社', 88.00, 60, 'https://covers.openlibrary.org/b/id/10684758-L.jpg', '揭示人类决策过程中的两种思维系统。'),
+
+-- 哲学
+(7, '沉思录', '马可·奥勒留', '商务印书馆', 35.00, 45, 'https://covers.openlibrary.org/b/id/10544758-L.jpg', '斯多葛主义哲学的杰作。'),
+(7, '尼采：悲剧的诞生', '弗里德里希·尼采', '译林出版社', 49.00, 30, 'https://covers.openlibrary.org/b/id/10694758-L.jpg', '探讨艺术、悲剧与文化起源的哲学思考。'),
+
+-- 旅行
+(8, '在路上', '杰克·凯鲁亚克', '作家出版社', 66.00, 40, 'https://covers.openlibrary.org/b/id/10534758-L.jpg', '垮掉的一代精神象征，公路旅行传奇。'),
+(8, '孤独星球：意大利', 'Lonely Planet', '中国地图出版社', 128.00, 22, 'https://covers.openlibrary.org/b/id/10634759-L.jpg', '详尽的意大利旅行指南。'),
+
+-- 自我提升
+(9, '掌控习惯', '詹姆斯·克利尔', '中信出版社', 68.00, 85, 'https://covers.openlibrary.org/b/id/10524758-L.jpg', '微小习惯成就巨大改变。'),
+(9, '刻意练习', '安德斯·艾利克森', '机械工业出版社', 72.00, 65, 'https://covers.openlibrary.org/b/id/10604758-L.jpg', '技能成长与卓越表现背后的科学。'),
+
+-- 经济管理
+(10, '从0到1', '彼得·蒂尔', '中信出版社', 58.00, 90, 'https://covers.openlibrary.org/b/id/10514758-L.jpg', '创新创业的思维指南。'),
+(10, '黑天鹅', '纳西姆·尼古拉斯·塔勒布', '中信出版社', 88.00, 50, 'https://covers.openlibrary.org/b/id/10614758-L.jpg', '探索极端事件与不确定性对世界的影响。');

@@ -2,8 +2,8 @@ package com.hugh.service.impl;
 
 import com.hugh.domain.User;
 import com.hugh.domain.UserProfile;
-import com.hugh.dao.UserDao;
-import com.hugh.dao.UserProfileDao;
+import com.hugh.mapper.UserDao;
+import com.hugh.mapper.UserProfileDao;
 import com.hugh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

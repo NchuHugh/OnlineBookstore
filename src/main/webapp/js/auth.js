@@ -129,19 +129,121 @@ function checkLoginStatus(callback) {
         .then(data => {
             if (data.success && data.data) {
                 // 用户已登录
+                const user = data.data;
+                // 更新导航栏显示
+                if (document.getElementById('userWelcome')) {
+                    document.getElementById('userWelcome').textContent = `${user.username}，您好！`;
+                }
+                if (document.getElementById('loginLink')) {
+                    document.getElementById('loginLink').style.display = 'none';
+                }
+                if (document.getElementById('registerLink')) {
+                    document.getElementById('registerLink').style.display = 'none';
+                }
+                if (document.getElementById('profileLink')) {
+                    document.getElementById('profileLink').style.display = 'inline';
+                }
+                if (document.getElementById('logoutLink')) {
+                    document.getElementById('logoutLink').style.display = 'inline';
+                    // 绑定退出登录事件
+                    document.getElementById('logoutLink').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        logoutUser();
+                    });
+                }
+                
+                // 获取购物车数量
+                updateCartBadge();
+                
                 if (callback) {
-                    callback(data.data);
+                    callback(user);
                 }
             } else {
-                // 未登录，重定向到登录页
-                window.location.href = 'login.html';
+                // 未登录，如果当前页面不是登录或注册页面，则重定向到登录页
+                const currentPage = window.location.pathname.split('/').pop();
+                if (currentPage !== 'login.html' && currentPage !== 'register.html') {
+                    window.location.href = 'login.html';
+                }
             }
         })
         .catch(error => {
             console.error('获取用户信息失败:', error);
-            window.location.href = 'login.html';
+            // 仅在非登录/注册页面重定向
+            const currentPage = window.location.pathname.split('/').pop();
+            if (currentPage !== 'login.html' && currentPage !== 'register.html') {
+                window.location.href = 'login.html';
+            }
         });
 }
+
+// 更新购物车数量显示
+function updateCartBadge() {
+    const cartLink = document.getElementById('cartLink');
+    if (!cartLink) return;
+    
+    fetch('/api/cart')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const items = data.data.items || [];
+                if (items.length > 0) {
+                    // 移除旧的徽章（如果存在）
+                    const oldBadge = cartLink.querySelector('.cart-badge');
+                    if (oldBadge) {
+                        oldBadge.remove();
+                    }
+                    
+                    // 添加新的徽章
+                    const badge = document.createElement('span');
+                    badge.className = 'cart-badge';
+                    badge.textContent = items.length;
+                    cartLink.appendChild(badge);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('获取购物车数据失败:', error);
+        });
+}
+
+// 页面加载时检查登录状态并更新UI
+document.addEventListener('DOMContentLoaded', function() {
+    // 获取当前用户信息
+    fetch('/api/users/current')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.data) {
+                // 用户已登录
+                const user = data.data;
+                if (document.getElementById('userWelcome')) {
+                    document.getElementById('userWelcome').textContent = `${user.username}，您好！`;
+                }
+                if (document.getElementById('loginLink')) {
+                    document.getElementById('loginLink').style.display = 'none';
+                }
+                if (document.getElementById('registerLink')) {
+                    document.getElementById('registerLink').style.display = 'none';
+                }
+                if (document.getElementById('profileLink')) {
+                    document.getElementById('profileLink').style.display = 'inline';
+                }
+                if (document.getElementById('logoutLink')) {
+                    document.getElementById('logoutLink').style.display = 'inline';
+                    // 绑定退出登录事件
+                    document.getElementById('logoutLink').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        logoutUser();
+                    });
+                }
+                
+                // 更新购物车数量
+                updateCartBadge();
+            }
+        })
+        .catch(error => {
+            console.error('获取用户信息失败:', error);
+        });
+});
 
 // 更新用户详细资料
 function updateUserProfile(userId, profileData) {

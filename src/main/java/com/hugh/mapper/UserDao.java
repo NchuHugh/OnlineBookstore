@@ -1,4 +1,4 @@
-package com.hugh.dao;
+package com.hugh.mapper;
 
 import com.hugh.domain.User;
 import org.apache.ibatis.annotations.Insert;
