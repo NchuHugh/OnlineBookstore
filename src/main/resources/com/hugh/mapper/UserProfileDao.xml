@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hugh.mapper.UserProfileDao">
+    <!-- 基本结果映射 -->
+    <resultMap id="userProfileResultMap" type="com.hugh.domain.UserProfile">
+        <id property="profileId" column="profile_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="realName" column="real_name"/>
+        <result property="address" column="address"/>
+        <result property="phone" column="phone"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+    
+    <!-- 包含用户信息的结果映射 -->
+    <resultMap id="userProfileWithUserResultMap" type="com.hugh.domain.UserProfile" extends="userProfileResultMap">
+        <association property="user" column="user_id" javaType="com.hugh.domain.User" 
+                     select="com.hugh.mapper.UserDao.findById"/>
+    </resultMap>
+    
+    <!-- 根据用户ID查询用户详细信息 -->
+    <select id="findByUserId" parameterType="int" resultMap="userProfileResultMap">
+        SELECT * FROM t_user_profile WHERE user_id = #{userId}
+    </select>
+    
+    <!-- 根据详情ID查询用户详细信息 -->
+    <select id="findById" parameterType="int" resultMap="userProfileResultMap">
+        SELECT * FROM t_user_profile WHERE profile_id = #{profileId}
+    </select>
+    
+    <!-- 查询用户详细信息（包含用户基本信息） -->
+    <select id="findProfileWithUser" parameterType="int" resultMap="userProfileWithUserResultMap">
+        SELECT * FROM t_user_profile WHERE user_id = #{userId}
+    </select>
+    
+    <!-- 插入用户详细信息 -->
+    <insert id="insert" parameterType="com.hugh.domain.UserProfile" useGeneratedKeys="true" keyProperty="profileId">
+        INSERT INTO t_user_profile(user_id, real_name, address, phone, updated_at)
+        VALUES(#{userId}, #{realName}, #{address}, #{phone}, #{updatedAt})
+    </insert>
+    
+    <!-- 更新用户详细信息 -->
+    <update id="update" parameterType="com.hugh.domain.UserProfile">
+        UPDATE t_user_profile 
+        SET real_name = #{realName}, 
+            address = #{address}, 
+            phone = #{phone}, 
+            updated_at = #{updatedAt} 
+        WHERE user_id = #{userId}
+    </update>
+    
+    <!-- 删除用户详细信息 -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM t_user_profile WHERE user_id = #{userId}
+    </delete>
+</mapper>

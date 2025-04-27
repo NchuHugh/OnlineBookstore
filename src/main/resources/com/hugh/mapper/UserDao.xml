@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hugh.mapper.UserDao">
+    <!-- 用户结果映射 -->
+    <resultMap id="userResultMap" type="com.hugh.domain.User">
+        <id property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="role" column="role"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+    
+    <!-- 根据用户ID查询用户 -->
+    <select id="findById" parameterType="int" resultMap="userResultMap">
+        SELECT user_id, username, password, email, role, created_at 
+        FROM t_user 
+        WHERE user_id = #{userId}
+    </select>
+    
+    <!-- 根据用户名查询用户 -->
+    <select id="findByUsername" parameterType="string" resultMap="userResultMap">
+        SELECT user_id, username, password, email, role, created_at 
+        FROM t_user 
+        WHERE username = #{username}
+    </select>
+    
+    <!-- 根据邮箱查询用户 -->
+    <select id="findByEmail" parameterType="string" resultMap="userResultMap">
+        SELECT user_id, username, password, email, role, created_at 
+        FROM t_user 
+        WHERE email = #{email}
+    </select>
+    
+    <!-- 插入新用户 -->
+    <insert id="insert" parameterType="com.hugh.domain.User" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO t_user(username, password, email, role, created_at)
+        VALUES(#{username}, #{password}, #{email}, #{role}, #{createdAt})
+    </insert>
+    
+    <!-- 更新用户信息 -->
+    <update id="update" parameterType="com.hugh.domain.User">
+        UPDATE t_user 
+        SET username = #{username}, 
+            password = #{password}, 
+            email = #{email}, 
+            role = #{role} 
+        WHERE user_id = #{userId}
+    </update>
+    
+    <!-- 删除用户 -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM t_user 
+        WHERE user_id = #{userId}
+    </delete>
+    
+    <!-- 验证用户登录 -->
+    <select id="verifyLogin" resultMap="userResultMap">
+        SELECT user_id, username, password, email, role, created_at 
+        FROM t_user 
+        WHERE username = #{username} AND password = #{password}
+    </select>
+</mapper>

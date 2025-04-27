@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hugh.mapper.BookDao">
+    <!-- 结果映射 -->
+    <resultMap id="bookResultMap" type="com.hugh.domain.Book">
+        <id property="bookId" column="book_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="title" column="title"/>
+        <result property="author" column="author"/>
+        <result property="publisher" column="publisher"/>
+        <result property="price" column="price"/>
+        <result property="stock" column="stock"/>
+        <result property="coverImage" column="cover_image"/>
+        <result property="description" column="description"/>
+    </resultMap>
+
+    <!-- 查询所有图书 -->
+    <select id="findAll" resultMap="bookResultMap">
+        SELECT book_id, category_id, title, author, publisher, price, stock, cover_image, description 
+        FROM t_book
+    </select>
+
+    <!-- 根据关键词搜索图书 -->
+    <select id="searchByKeyword" parameterType="string" resultMap="bookResultMap">
+        SELECT book_id, category_id, title, author, publisher, price, stock, cover_image, description 
+        FROM t_book 
+        WHERE title LIKE CONCAT('%', #{keyword}, '%') OR author LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <!-- 根据ID查询图书 -->
+    <select id="findById" parameterType="int" resultMap="bookResultMap">
+        SELECT book_id, category_id, title, author, publisher, price, stock, cover_image, description 
+        FROM t_book 
+        WHERE book_id = #{bookId}
+    </select>
+
+    <!-- 分页查询所有图书 -->
+    <select id="findAllWithPaging" resultMap="bookResultMap">
+        SELECT book_id, category_id, title, author, publisher, price, stock, cover_image, description 
+        FROM t_book 
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 分页搜索图书 -->
+    <select id="searchByKeywordWithPaging" resultMap="bookResultMap">
+        SELECT book_id, category_id, title, author, publisher, price, stock, cover_image, description 
+        FROM t_book 
+        WHERE title LIKE CONCAT('%', #{keyword}, '%') OR author LIKE CONCAT('%', #{keyword}, '%') 
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 获取图书总数 -->
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM t_book
+    </select>
+
+    <!-- 获取搜索结果总数 -->
+    <select id="countByKeyword" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM t_book 
+        WHERE title LIKE CONCAT('%', #{keyword}, '%') OR author LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+</mapper>
