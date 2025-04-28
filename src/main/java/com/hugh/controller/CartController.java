@@ -1,5 +1,6 @@
 package com.hugh.controller;
 
+import com.hugh.aop.RequireLogin;
 import com.hugh.domain.CartItem;
 import com.hugh.domain.User;
 import com.hugh.service.CartService;
@@ -26,12 +27,9 @@ public class CartController {
      * 获取当前用户的购物车
      */
     @GetMapping
+    @RequireLogin
     public Result getCart(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return Result.error("未登录");
-        }
-
         List<CartItem> cartItems = cartService.getCartItems(user.getUserId());
         
         // 计算总金额
@@ -51,11 +49,9 @@ public class CartController {
      * 添加商品到购物车
      */
     @PostMapping("/add")
+    @RequireLogin
     public Result addToCart(@RequestBody Map<String, Object> requestMap, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return Result.error("未登录");
-        }
 
         Integer bookId = Integer.parseInt(requestMap.get("bookId").toString());
         Integer quantity = Integer.parseInt(requestMap.get("quantity").toString());
@@ -77,11 +73,9 @@ public class CartController {
      * 更新购物车项数量
      */
     @PutMapping("/update")
+    @RequireLogin
     public Result updateQuantity(@RequestBody Map<String, Object> requestMap, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return Result.error("未登录");
-        }
 
         Integer cartItemId = Integer.parseInt(requestMap.get("cartItemId").toString());
         Integer quantity = Integer.parseInt(requestMap.get("quantity").toString());
@@ -103,11 +97,9 @@ public class CartController {
      * 从购物车中删除项
      */
     @DeleteMapping("/remove/{cartItemId}")
+    @RequireLogin
     public Result removeFromCart(@PathVariable Integer cartItemId, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return Result.error("未登录");
-        }
 
         boolean success = cartService.removeFromCart(cartItemId);
         
@@ -122,11 +114,9 @@ public class CartController {
      * 清空购物车
      */
     @DeleteMapping("/clear")
+    @RequireLogin
     public Result clearCart(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return Result.error("未登录");
-        }
 
         boolean success = cartService.clearCart(user.getUserId());
         
